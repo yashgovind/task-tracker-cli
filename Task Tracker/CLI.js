@@ -1,68 +1,67 @@
-const { addTask, deleteTask, updateTask, listByStatus, ListAllTasks, markByStatus } = require('./taskManager');
-const { printer } = require('./printer');
+const { printer, showHelp } = require("./helper");
+const { addTask, deleteTask, listByStatus, updateTask, ListAllTasks, markByStatus } = require("./To-Do-Main");
 
-// Parse CLI arguments.
+// CLI Logic
 const args = process.argv.slice(2);
-const command = args[0];
 
-switch (command) {
-    case 'add':
-        const desc = args.slice(1).join(' ');
-        if (desc) {
-            addTask(desc);
-            printer(`Task added: "${desc}"`);
-        } else {
-            printer('Please provide a description for the new task.');
-        }
-        break;
+if (args.length === 0) {
+    console.log("No command provided. Use 'help' to see the available commands.");
+    showHelp();
+} else {
+    const command = args[0];
+    const param = args[1];
 
-    case 'delete':
-        const deleteId = parseInt(args[1]);
-        if (!isNaN(deleteId)) {
-            deleteTask(deleteId);
-        } else {
-            printer('Please provide a valid ID to delete.');
-        }
-        break;
+    switch (command) {
+        case 'add':
+            if (!param) {
+                console.log("Please provide a task to add.");
+            } else {
+                addTask(param);
+                console.log(`Task added: ${param}`);
+            }
+            break;
 
-    case 'update':
-        const updateId = parseInt(args[1]);
-        const newDesc = args.slice(2).join(' ');
-        if (!isNaN(updateId) && newDesc) {
-            const message = updateTask(updateId, newDesc);
-            printer(message);
-        } else {
-            printer('Please provide a valid ID and a new description.');
-        }
-        break;
+        case 'delete':
+            if (!param) {
+                console.log("Please provide the task ID to delete.");
+            } else {
+                deleteTask(param);
+                console.log(`Task deleted: ${param}`);
+            }
+            break;
 
-    case 'list':
-        ListAllTasks();
-        break;
+        case 'update':
+            if (!param) {
+                console.log("Please provide the task ID to update.");
+            } else {
+                updateTask(param);
+                console.log(`Task updated: ${param}`);
+            }
+            break;
 
-    case 'mark':
-        const status = args[1];
-        const markId = parseInt(args[2]);
-        if (status && !isNaN(markId)) {
-            const message = markByStatus(status, markId);
-            printer(message);
-        } else {
-            printer('Please provide a valid status and ID to mark the task.');
-        }
-        break;
+        case 'list':
+            console.log("Listing all tasks:");
+            ListAllTasks();
+            break;
 
-    case 'status':
-        const filterStatus = args[1];
-        if (filterStatus) {
-            const message = listByStatus(filterStatus);
-            printer(message);
-        } else {
-            printer('Please provide a status to filter tasks.');
-        }
-        break;
+        case 'mark':
+            if (!param) {
+                console.log("Please provide the status to filter tasks.");
+            } else {
+                markByStatus(param);
+                console.log(`Tasks marked by status: ${param}`);
+            }
+            break;
 
-    case 'help':
-    default:
-        showHelp();
-        break;
+        case 'help':
+            showHelp();
+            break;
+
+        default:
+            console.log(`Unknown command: ${command}. Use 'help' for a list of commands.`);
+            showHelp();
+    }
 }
+
+
+ 
