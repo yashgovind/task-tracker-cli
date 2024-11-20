@@ -1,7 +1,7 @@
 {
-  "name": "roadmapsh-backend-projects",
+  "name": "task-tracker",
   "version": "1.0.0",
-  "main": "script.js",
+  "main": "CLI.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
