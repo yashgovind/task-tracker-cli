@@ -24,7 +24,7 @@ function getMaxId() {
 }
 // add task by id.
 function addTask(desc) {
-    tasks = readFile();
+ let task = readFile();
     const maxId = getMaxId();
     id = maxId + 1;
     const newStatus = { isDone: false, isToDo: true, isInProgress: false }; 
@@ -35,12 +35,12 @@ function addTask(desc) {
 }
 // delete task by id
 function deleteTask(id) {
-    tasks = readFile();
+   tasks = readFile();
     const initialLength = tasks.length;
-    const task = tasks.filter(task=>task.id!==id); 
-    tasks = task;
-    if (tasks.length < initialLength) {
-        writeFile(tasks);
+    let tasker = tasks.filter(task=>task.id!==id); 
+    // tasks = task
+    if (tasker.length < initialLength) {
+        writeFile(tasker);
         console.log(`task is deleted at the id ${id}`);
     }
     else{
@@ -68,7 +68,7 @@ function updateTask(id, desc) {
 }
 // list all tasks
 function ListAllTasks() {
-     tasks = readFile();
+    tasks= readFile();
     tasks.forEach((task, index) => {
         console.log(`Task at ${index + 1} is ${JSON.stringify(task, null, 2)}`);
     });
