@@ -26,7 +26,7 @@ if (args.length === 0) {
                 console.log("Please provide the task ID to delete.");
             } else {
                 deleteTask(param);
-                console.log(`Task deleted: ${param}`);
+                console.log(`Task deleted: ${param}`); //error possibly here.
             }
             break;
 
@@ -35,7 +35,7 @@ if (args.length === 0) {
                 console.log("Please provide the task ID to update.");
             } else {
                 updateTask(param);
-                console.log(`Task updated: ${param}`);
+                console.log(`Task updated: ${param}`); //error possibly here as well. add more params here .
             }
             break;
 
@@ -46,7 +46,7 @@ if (args.length === 0) {
 
         case 'mark':
             if (!param) {
-                console.log("Please provide the status to filter tasks.");
+                console.log("Please provide the status to filter tasks."); // error possibly here as well . add more params here.
             } else {
                 markByStatus(param);
                 console.log(`Tasks marked by status: ${param}`);
