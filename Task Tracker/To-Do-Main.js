@@ -34,22 +34,23 @@ function addTask(desc) {
 }
 // delete task by id
 function deleteTask(id) {
-    tasks = readFile();
-    let taskDeleted = false;
-    for (let i  = 0; i <tasks.length; i++) {
-        if (tasks[i].id === id) {
-            tasks.splice(i, 1);
-            taskDeleted = true;
-        }
-    }
-    if (taskDeleted) {
-        writeFile(tasks);
-        return (`task with id ${id} is deleted `);
-    }
-    else {
-        return (`task with id ${id} is not found`);
+    tasks = readFile(); // Load tasks from file
+    const initialLength = tasks.length;
+
+    // Ensure the ID is a number (if stored as a number in tasks)
+    id = parseInt(id);
+
+    // Filter out tasks where the ID does not match
+    tasks = tasks.filter(task => task.id !== id);
+
+    if (tasks.length < initialLength) {
+        writeFile(tasks); // Write updated tasks back to file
+        console.log(`Task with ID=${id} has been deleted.`);
+    } else {
+        console.log(`Task with ID=${id} not found.`);
     }
 }
+
 // get task by its id
 function getTaskByid(id){
     const task = tasks.find(task=>task.id===id); 

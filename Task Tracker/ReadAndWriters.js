@@ -10,8 +10,7 @@ const readFile = () => {
         }
     }
     catch (e) {
-        console.error('error', e.message);
-        return []; // return empty array to prevent app crashes.
+        console.error('error', e.message); // return empty array to prevent app crashes.
     }
 }
 const writeFile = (task) => {

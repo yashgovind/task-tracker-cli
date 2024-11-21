@@ -9,59 +9,65 @@ if (args.length === 0) {
     showHelp();
 } else {
     const command = args[0];
-    const param = args[1];
 
     switch (command) {
-        case 'add':
-            if (!param) {
-                console.log("Please provide a task to add.");
+        case 'add': {
+            const taskDesc = args.slice(1).join(" "); // Allow multi-word tasks
+            if (!taskDesc) {
+                console.log("Please provide a task description.");
             } else {
-                addTask(param);
-                console.log(`Task added: ${param}`);
+                addTask(taskDesc);
+                console.log(`Task added: ${taskDesc}`);
             }
             break;
+        }
 
-        case 'delete':
-            if (!param) {
-                console.log("Please provide the task ID to delete.");
+        case 'delete': {
+            const taskId = parseInt(args[1], 10);
+            if (isNaN(taskId)) {
+                console.log("Please provide a valid numeric task ID to delete.");
             } else {
-                deleteTask(param);
-                console.log(`Task deleted: ${param}`); //error possibly here.
+                deleteTask(taskId);
+                console.log(`Task deleted: ID=${taskId}`);
             }
             break;
+        }
 
-        case 'update':
-            if (!param) {
-                console.log("Please provide the task ID to update.");
+        case 'update': {
+            const [taskId, ...descParts] = args.slice(1); // Extract ID and description
+            const newDesc = descParts.join(" ");
+            if (!taskId || !newDesc) {
+                console.log("Please provide both task ID and the new description.");
             } else {
-                updateTask(param);
-                console.log(`Task updated: ${param}`); //error possibly here as well. add more params here .
+                console.log(updateTask(parseInt(taskId, 10), newDesc));
             }
             break;
+        }
 
-        case 'list':
+        case 'list': {
             console.log("Listing all tasks:");
             ListAllTasks();
             break;
+        }
 
-        case 'mark':
-            if (!param) {
-                console.log("Please provide the status to filter tasks."); // error possibly here as well . add more params here.
+        case 'mark': {
+            const [status, taskId] = args.slice(1);
+            if (!status || !taskId) {
+                console.log("Please provide both a status and task ID to mark.");
             } else {
-                markByStatus(param);
-                console.log(`Tasks marked by status: ${param}`);
+                console.log(markByStatus(status, parseInt(taskId, 10)));
             }
             break;
+        }
 
-        case 'help':
+        case 'help': {
             showHelp();
             break;
+        }
 
-        default:
+        default: {
             console.log(`Unknown command: ${command}. Use 'help' for a list of commands.`);
             showHelp();
+        }
     }
 }
-
-
- 
