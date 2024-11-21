@@ -5,14 +5,8 @@ const path = 'tasks.json';
 const readFile = () => {
     try {
         let res = fs.readFileSync(path, "utf-8",);
-        if (!fs.existsSync(path)) {
-            return []; // return empty if file doesnt exist.
-        }
         if (res) {
-         return JSON.parse(res); // response parser.
-        }
-        else {
-            return [];
+            return JSON.parse(res);
         }
     }
     catch (e) {
@@ -22,7 +16,13 @@ const readFile = () => {
 }
 const writeFile = (task) => {
     try {
-        fs.writeFileSync(path, JSON.stringify(task, null, 2), 'utf-8'); 
+        let res = readFile();
+        if (!res) {
+            // if no response is coming. then response is an empty array.
+            res = [];
+        }
+        res.push(task); // push the object in the response.
+        fs.writeFileSync(path, JSON.stringify(res, null, 2), 'utf-8'); // write that object in the filepath by stringyfying.
     } catch (error) {
         console.error('Error writing to file:', error.message);
     }

@@ -16,37 +16,39 @@ let Status = {
 // main functions .
 
 // get maximum id. for unique id.
-function getMaxId() {
-    let max = 0;
-    for (let i = 0; i < tasks.length; i++){
-       max = Math.max(max, tasks[i].id); 
-    }   return max;
-}
+// function getMaxId() {
+//     let max = 0;
+//     for (let i = 0; i < tasks.length; i++){
+//        max = Math.max(max, tasks[i].id); 
+//     }   return max;
+// }
 // add task by id.
 function addTask(desc) {
- let task = readFile();
-    const maxId = getMaxId();
-    id = maxId + 1;
+    tasks = readFile();
+    const newid = id ;
     const newStatus = { isDone: false, isToDo: true, isInProgress: false }; 
-    const newTask = { id,desc,Status:newStatus};
+    const newTask = { id:newid,desc,Status:newStatus};
     tasks.push(newTask);
     writeFile(newTask);
     id++;
 }
 // delete task by id
 function deleteTask(id) {
-   tasks = readFile();
-    const initialLength = tasks.length;
-    let tasker = tasks.filter(task=>task.id!==id); 
-    // tasks = task
-    if (tasker.length < initialLength) {
-        writeFile(tasker);
-        console.log(`task is deleted at the id ${id}`);
+    tasks = readFile();
+    let taskDeleted = false;
+    for (let i  = 0; i <tasks.length; i++) {
+        if (tasks[i].id === id) {
+            tasks.splice(i, 1);
+            taskDeleted = true;
+        }
     }
-    else{
-        console.log(`task at id ${id} not found`);   
+    if (taskDeleted) {
+        writeFile(tasks);
+        return (`task with id ${id} is deleted `);
     }
-
+    else {
+        return (`task with id ${id} is not found`);
+    }
 }
 // get task by its id
 function getTaskByid(id){
@@ -55,7 +57,7 @@ function getTaskByid(id){
 }
 //update task by id and desc
 function updateTask(id, desc) {
-   let tasks =  readFile();
+    tasks =  readFile();
  const task = getTaskByid(id);
  if(task){
      task.desc = desc;

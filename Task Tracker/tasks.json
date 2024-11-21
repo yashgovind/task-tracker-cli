@@ -1,9 +1,11 @@
-{
-  "id": 1,
-  "desc": "task-1",
-  "Status": {
-    "isDone": false,
-    "isToDo": true,
-    "isInProgress": false
+[
+  {
+    "id": 2,
+    "desc": "task-1",
+    "Status": {
+      "isDone": false,
+      "isToDo": true,
+      "isInProgress": false
+    }
   }
-}
+]
