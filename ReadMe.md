@@ -4,7 +4,7 @@ This is a simple CLI application that allows you to add, delete, update, and mar
 
 ## Functions 
 ``` bash
-# Adding a new task
+# Adding a new task 
 task-cli add "Buy groceries"
 # Output: Task added successfully (ID: 1)
 
